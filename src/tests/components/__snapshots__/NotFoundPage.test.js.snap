@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render Header correctly 1`] = `
+<div>
+  this is the NotFoundPage 
+  <NavLink
+    activeClassName="active"
+    to="/"
+  >
+    Go home
+  </NavLink>
+</div>
+`;
