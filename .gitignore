@@ -1,9 +1,6 @@
 # dependencies
 /node_modules
-public/bundle.js
-public/bundle.js.map
-public/styles.css
-public/styles.css.map
+public/dist/
 
 # Editor config
 /.vscode
