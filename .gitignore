@@ -1,6 +1,6 @@
 # dependencies
 /node_modules
-public/dist/
+public/dist/  
 
 # Editor config
 /.vscode
