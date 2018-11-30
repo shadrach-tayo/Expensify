@@ -2,5 +2,9 @@
 /node_modules
 public/dist/  
 
+# config files
+.env.test
+.env.development
+
 # Editor config
 /.vscode
