@@ -4,14 +4,14 @@ import expenses from '../fixtures/expenses';
 import { EditExpense } from '../../components/EditExpense';
 
 // setup spies
-let editExpense, startRemoveExpense, history, wrapper;
+let startEditExpense, startRemoveExpense, history, wrapper;
 beforeEach(() => {
-  editExpense = jest.fn();
+  startEditExpense = jest.fn();
   startRemoveExpense = jest.fn();
   history = { push: jest.fn() };
   wrapper = shallow(
     <EditExpense
-      editExpense={editExpense}
+      startEditExpense={startEditExpense}
       startRemoveExpense={startRemoveExpense}
       history={history}
       expense={expenses[0]}
@@ -26,7 +26,10 @@ test('should render EditExpense correctly', () => {
 // handle edit expense using spies
 test('should handle editExpense correctly', () => {
   wrapper.find('ExpenseForm').prop('onSubmit')(expenses[0]);
-  expect(editExpense).toHaveBeenLastCalledWith(expenses[0].id, expenses[0]);
+  expect(startEditExpense).toHaveBeenLastCalledWith(
+    expenses[0].id,
+    expenses[0]
+  );
   expect(history.push).toHaveBeenLastCalledWith('/');
 });
 

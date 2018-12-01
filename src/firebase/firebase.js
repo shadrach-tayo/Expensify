@@ -33,12 +33,21 @@ export { firebase, database as default };
 //       .catch(() => console.log('remove failed'));
 //   });
 
-// database.ref('expenses').push({
-//   description: 'house rent',
-//   amount: 5000,
-//   createdAt: 90893892,
-//   note: 'Paid house rent'
-// });
+// database
+//   .ref('test')
+//   .push({
+//     description: 'house rent',
+//     amount: 5000,
+//     createdAt: 90893892,
+//     note: 'To rent'
+//   })
+//   .then(ref => {
+//     database
+//       .ref(`test/${ref.key}`)
+//       .update({ note: 'Paid house rent' })
+//       .then(() => console.log('updated'))
+//       .catch(() => console.log('not updated'));
+//   });
 
 // // database
 // //   .ref('expenses')
