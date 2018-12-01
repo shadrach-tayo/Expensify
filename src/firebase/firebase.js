@@ -16,26 +16,22 @@ const database = firebase.database();
 
 export { firebase, database as default };
 
-// // database.ref('expenses').push({
-// //   description: 'First expense',
-// //   amount: 500,
-// //   createdAt: 100,
-// //   note: 'expense note'
-// // });
-
-// // database.ref('expenses').push({
-// //   description: 'Second expense',
-// //   amount: 2000,
-// //   createdAt: 1030,
-// //   note: 'expense note'
-// // });
-
-// // database.ref('expenses').push({
-// //   description: 'First expense',
-// //   amount: 5020,
-// //   createdAt: 100,
-// //   note: 'expense note'
-// // });
+// database
+//   .ref('test')
+//   .push({
+//     description: 'test expense',
+//     amount: 500,
+//     createdAt: 100,
+//     note: 'expense note'
+//   })
+//   .then(ref => {
+//     console.log(ref.key);
+//     database
+//       .ref(`test/${ref.key}`)
+//       .remove()
+//       .then(() => console.log('remove succeeded'))
+//       .catch(() => console.log('remove failed'));
+//   });
 
 // database.ref('expenses').push({
 //   description: 'house rent',
