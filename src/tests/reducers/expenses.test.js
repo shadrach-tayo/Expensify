@@ -1,4 +1,5 @@
 import expenseReducer from '../../reducers/expenses';
+import expenses from '../fixtures/expenses';
 
 // test case for default state
 test('should return default state', () => {
@@ -85,4 +86,13 @@ test('should not remove expense if id is not found', () => {
     id: '-1'
   });
   expect(state).toEqual(expenseListState);
+});
+
+test('should set expenses', () => {
+  const action = {
+    type: 'SET_EXPENSES',
+    expenses: [expenses[2]]
+  };
+  const state = expenseReducer(expenses, action);
+  expect(state).toEqual(action.expenses);
 });
