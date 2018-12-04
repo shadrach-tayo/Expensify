@@ -2,9 +2,16 @@ html {
   font-size: 62.5%;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
+  color: $dark-gray;
+  line-height: $m-size;
   font-family: Helvetica, Arial, sans-serif;
   font-size: $m-size;
+  overflow-x: hidden;
 }
 
 button {

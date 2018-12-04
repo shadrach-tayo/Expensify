@@ -21,6 +21,9 @@ export const startAddExpense = (expenseData = {}) => {
       .push(expense)
       .then(ref => {
         dispatch(addExpense({ id: ref.key, ...expense }));
+      })
+      .catch(err => {
+        debugger;
       });
   };
 };

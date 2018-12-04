@@ -1,0 +1,18 @@
+.btn {
+  background: $blue;
+  color: #ffffff;
+  display: inline-block;
+  border: none;
+  padding: $s-size;
+  font-size: $font-size-large;
+  line-height: 1.5rem;
+  text-decoration: none;
+
+  &--sec {
+    background: #888888;
+  }
+}
+
+.btn--link {
+  background: transparent;
+}
