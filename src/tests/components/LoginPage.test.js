@@ -3,10 +3,16 @@ import { shallow } from 'enzyme';
 import toJSON from 'enzyme-to-json';
 import { LoginPage } from '../../components/LoginPage';
 
-let wrapper, startLogin;
+let wrapper, startGoogleLogin, startTwitterLogin;
 beforeEach(() => {
-  startLogin = jest.fn();
-  wrapper = shallow(<LoginPage startLogin={startLogin} />);
+  startGoogleLogin = jest.fn();
+  startTwitterLogin = jest.fn();
+  wrapper = shallow(
+    <LoginPage
+      startGoogleLogin={startGoogleLogin}
+      startTwitterLogin={startTwitterLogin}
+    />
+  );
 });
 
 // react test renderer
@@ -14,7 +20,12 @@ test('should render LoginPage correctly', () => {
   expect(toJSON(wrapper)).toMatchSnapshot();
 });
 
-test('should call startLogin on button click', () => {
-  wrapper.find('button').simulate('click');
-  expect(startLogin).toHaveBeenCalled();
+test('should call startGoogleLogin on button click', () => {
+  wrapper.find('.btn__google').simulate('click');
+  expect(startGoogleLogin).toHaveBeenCalled();
+});
+
+test('should call startTwitterLogin on button click', () => {
+  wrapper.find('.btn__twitter').simulate('click');
+  expect(startTwitterLogin).toHaveBeenCalled();
 });

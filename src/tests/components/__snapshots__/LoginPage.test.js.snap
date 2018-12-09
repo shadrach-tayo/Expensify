@@ -12,11 +12,17 @@ exports[`should render LoginPage correctly 1`] = `
     >
       Expensify
     </h1>
-    <p>
+    <h3>
       It's time to get your expenses under control
-    </p>
+    </h3>
     <button
-      className="btn"
+      className="btn btn__google"
+      onClick={[Function]}
+    >
+      Login with Google
+    </button>
+    <button
+      className="btn btn__twitter"
       onClick={[Function]}
     >
       Login with Google

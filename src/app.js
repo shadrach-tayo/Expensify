@@ -30,8 +30,8 @@ const renderApp = () => {
 ReactDOM.render(<Loader />, document.getElementById('app'));
 
 firebase.auth().onAuthStateChanged(user => {
+  console.log(user);
   if (user) {
-    console.log(user);
     store.dispatch(login(user.uid));
     store.dispatch(startSetExpenses()).then(() => {
       renderApp();

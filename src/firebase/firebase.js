@@ -14,8 +14,14 @@ firebase.initializeApp(config);
 
 const database = firebase.database();
 const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+const twitterAuthProvider = new firebase.auth.TwitterAuthProvider();
 
-export { firebase, googleAuthProvider, database as default };
+export {
+  firebase,
+  googleAuthProvider,
+  twitterAuthProvider,
+  database as default
+};
 
 // database
 //   .ref('test')
