@@ -10,3 +10,7 @@
 ## Login page view
 
 ![expensify login page view](https://github.com/shadrach-tayo/Expensify/blob/master/login.jpg)
+
+## Little Demo
+
+![Quick Demo](expensify.webm)

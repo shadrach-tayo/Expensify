@@ -9,10 +9,10 @@ export const LoginPage = ({ startGoogleLogin, startTwitterLogin }) => {
         <h1 className="box-layout__title">Expensify</h1>
         <h3>It's time to get your expenses under control</h3>
         <button className="btn btn__google" onClick={startGoogleLogin}>
-          Login with Google
+          Continue with Google
         </button>
         <button className="btn btn__twitter" onClick={startTwitterLogin}>
-          Login with Google
+          continue with Twitter
         </button>
       </div>
     </div>
