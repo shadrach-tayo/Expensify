@@ -11,6 +11,6 @@
 
 ![expensify login page view](https://github.com/shadrach-tayo/Expensify/blob/master/login.jpg)
 
-## Little Demo
+## Demo
 
-![Quick Demo](expensify.webm)
+![expensify Demo](expensify.gif)
