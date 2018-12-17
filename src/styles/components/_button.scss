@@ -9,7 +9,8 @@
   line-height: 1.5rem;
   text-decoration: none;
 
-  &__google {
+  &__google,
+  &--delete {
     background: rgb(212, 53, 53);
   }
 

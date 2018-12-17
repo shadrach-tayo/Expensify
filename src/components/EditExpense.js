@@ -1,18 +1,56 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import ReactModal from 'react-modal';
 import ExpenseForm from './ExpenseForm';
 import { startEditExpense, startRemoveExpense } from '../actions/expenses';
 
+const modalStyle = {
+  overlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.8)'
+  },
+  content: {
+    top: '30%',
+    right: '10%',
+    left: '10%',
+    border: 'none',
+    bottom: '0',
+    boxSizing: 'border-box',
+    display: 'flex',
+    flexDirection: 'column',
+    justifySelf: 'center',
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '180px',
+    maxWidth: '600px',
+    minWidth: '300px'
+  }
+};
+
+ReactModal.setAppElement(document.getElementById('app'));
+
 export class EditExpense extends React.Component {
+  state = {
+    showModal: false
+  };
   onSubmit = expense => {
     this.props.startEditExpense(this.props.expense.id, expense);
     this.props.history.push('/');
   };
 
   onRemove = () => {
+    this.setState({ showModal: false });
     let id = this.props.expense.id;
     this.props.startRemoveExpense({ id });
     this.props.history.push('/');
+  };
+
+  confirmDelete = () => {
+    this.setState({ showModal: true });
+  };
+
+  handleCloseModal = () => {
+    this.setState({ showModal: false });
   };
 
   render() {
@@ -24,10 +62,31 @@ export class EditExpense extends React.Component {
           </div>
         </div>
         <div className="container">
+          <ReactModal
+            aria={{ label: 'Confirm expense delete modal' }}
+            isOpen={this.state.showModal}
+            shouldFocusAfterRender={true}
+            shouldCloseOnEsc={true}
+            shouldCloseOnOverlayClick={true}
+            onRequestClose={this.handleCloseModal}
+            style={modalStyle}
+          >
+            <p>
+              <strong>{this.props.expense.description}</strong> will be
+              permanently deleted
+            </p>
+            <button className="btn btn--delete" onClick={this.onRemove}>
+              delete
+            </button>
+          </ReactModal>
           <ExpenseForm onSubmit={this.onSubmit} expense={this.props.expense} />
           <div className="container">
             <div className="input-group">
-              <button className="btn btn--sec" onClick={this.onRemove}>
+              <button
+                className="btn btn--delete"
+                onClick={this.confirmDelete}
+                style={{ justifySelf: 'right' }}
+              >
                 Delete item
               </button>
             </div>
