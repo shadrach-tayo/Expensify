@@ -16,10 +16,18 @@ const database = firebase.database();
 const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 const twitterAuthProvider = new firebase.auth.TwitterAuthProvider();
 
+const githubAuthProvider = new firebase.auth.GithubAuthProvider();
+// firebase
+//   .auth()
+//   .signInWithPopup(githubAuthProvider)
+//   .then(({ user }) => console.log(user))
+//   .catch(err => console.log(err));
+
 export {
   firebase,
   googleAuthProvider,
   twitterAuthProvider,
+  githubAuthProvider,
   database as default
 };
 
