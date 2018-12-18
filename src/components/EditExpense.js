@@ -9,21 +9,18 @@ const modalStyle = {
     backgroundColor: 'rgba(0, 0, 0, 0.8)'
   },
   content: {
-    top: '30%',
-    right: '10%',
-    left: '10%',
-    border: 'none',
-    bottom: '0',
-    boxSizing: 'border-box',
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
     display: 'flex',
     flexDirection: 'column',
     justifySelf: 'center',
     alignSelf: 'center',
     alignItems: 'center',
-    justifyContent: 'center',
-    height: '180px',
-    maxWidth: '600px',
-    minWidth: '300px'
+    padding: '10px 20px'
   }
 };
 

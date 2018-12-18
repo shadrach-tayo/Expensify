@@ -1,6 +1,6 @@
 .ReactModal__Overlay {
   opacity: 0;
-  transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.2s ease-in;
 }
 
 .ReactModal__Overlay--after-open {
@@ -9,4 +9,12 @@
 
 .ReactModal__Overlay--before-close {
   opacity: 0;
+}
+
+.ReactModal__Content {
+  transition: opacity 0.2s ease-in;
+}
+
+.ReactModal__Body--open {
+  overflow: hidden;
 }
