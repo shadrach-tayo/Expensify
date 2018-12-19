@@ -33,9 +33,15 @@ test('should handle editExpense correctly', () => {
   expect(history.push).toHaveBeenLastCalledWith('/');
 });
 
-// handle remove expense using spies
+// confirm remove expense
+test('should confirm removeExpense correctly', () => {
+  wrapper.find('.confirm-delete').simulate('click');
+  expect(wrapper.state('showModal')).toBe(true);
+});
+
+// handle remove expense
 test('should handle removeExpense correctly', () => {
-  wrapper.find('button').simulate('click');
+  wrapper.find('.delete').simulate('click');
   expect(startRemoveExpense).toHaveBeenLastCalledWith({ id: expenses[0].id });
   expect(history.push).toHaveBeenLastCalledWith('/');
 });

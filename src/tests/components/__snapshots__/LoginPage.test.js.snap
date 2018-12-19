@@ -19,13 +19,18 @@ exports[`should render LoginPage correctly 1`] = `
       className="btn btn__google"
       onClick={[Function]}
     >
-      Login with Google
+      continue with Google
     </button>
     <button
       className="btn btn__twitter"
       onClick={[Function]}
     >
-      Login with Google
+      continue with Twitter
+    </button>
+    <button
+      className="btn btn__github"
+    >
+      continue with Github
     </button>
   </div>
 </div>

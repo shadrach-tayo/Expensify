@@ -72,7 +72,7 @@ export class EditExpense extends React.Component {
               <strong>{this.props.expense.description}</strong> will be
               permanently deleted
             </p>
-            <button className="btn btn--delete" onClick={this.onRemove}>
+            <button className="btn btn--delete delete" onClick={this.onRemove}>
               delete
             </button>
           </ReactModal>
@@ -80,7 +80,7 @@ export class EditExpense extends React.Component {
           <div className="container">
             <div className="input-group">
               <button
-                className="btn btn--delete"
+                className="btn btn--delete confirm-delete"
                 onClick={this.confirmDelete}
                 style={{ justifySelf: 'right' }}
               >

@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-15';
+import Adapter from 'enzyme-adapter-react-16';
 
 dotenv.config({ path: '.env.test' });
 Enzyme.configure({
