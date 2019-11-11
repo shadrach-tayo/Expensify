@@ -1,4 +1,4 @@
-import * as firebase from 'firebase';
+import * as firebase from "firebase";
 
 // Initialize Firebase
 const config = {
@@ -9,7 +9,8 @@ const config = {
   storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
   messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID
 };
-
+console.log("config: ", config);
+console.log("config: ", process.env);
 firebase.initializeApp(config);
 
 const database = firebase.database();
