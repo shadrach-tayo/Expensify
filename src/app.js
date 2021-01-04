@@ -1,15 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import AppRouter, { history } from './routers/AppRouter';
-import { firebase } from './firebase/firebase';
-import { startSetExpenses } from './actions/expenses';
-import configureStore from './store/configureStore';
-import { login, logout } from './actions/auth';
-import { Loader } from './components/Loader';
-import 'normalize.css/normalize.css';
-import './styles/styles.scss';
-import 'react-dates/lib/css/_datepicker.css';
+import React from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import AppRouter, { history } from "./routers/AppRouter";
+import { firebase } from "./firebase/firebase";
+// import { startSetExpenses } from "./actions/expenses";
+import configureStore from "./store/configureStore";
+// import { login, logout } from "./actions/auth";
+import { Loader } from "./components/Loader";
+import "normalize.css/normalize.css";
+import "./styles/styles.scss";
+import "react-dates/lib/css/_datepicker.css";
+import { loginSuccess, logout } from "./slices/auth";
+
+/**
+ * TODO: refactor component to dispatch login using useEffect hook
+ * pass the user.uid from as a dependency
+ */
 
 const store = configureStore();
 
@@ -22,23 +28,24 @@ const jsx = (
 let hasRendered = false;
 const renderApp = () => {
   if (!hasRendered) {
-    ReactDOM.render(jsx, document.getElementById('app'));
+    ReactDOM.render(jsx, document.getElementById("app"));
     hasRendered = true;
   }
 };
 
-ReactDOM.render(<Loader />, document.getElementById('app'));
+ReactDOM.render(<Loader />, document.getElementById("app"));
 
-firebase.auth().onAuthStateChanged(user => {
+firebase.auth().onAuthStateChanged((user) => {
+  console.log("auth changed ", user);
   if (user) {
-    store.dispatch(login(user.uid));
-    store.dispatch(startSetExpenses()).then(() => {
-      renderApp();
-      if (history.location.pathname === '/') history.push('/dashboard');
-    });
+    store.dispatch(loginSuccess(user.providerData[0]));
+    renderApp();
+    // store.dispatch(startSetExpenses()).then(() => {
+    //   if (history.location.pathname === '/') history.push('/dashboard');
+    // });
   } else {
     store.dispatch(logout());
     renderApp();
-    history.push('/');
+    history.push("/");
   }
 });

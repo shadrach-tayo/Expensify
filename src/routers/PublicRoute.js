@@ -1,8 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
+import { getAuth } from '../selectors';
+import { useSelector } from "react-redux";
 
-const PublicRoute = ({ isAuthenticated, component: Component, ...rest }) => (
+const PublicRoute = ({ component: Component, ...rest }) => {
+  const {isAuthenticated} = useSelector(getAuth)
+
+   return (
   <Route
     {...rest}
     component={props =>
@@ -16,9 +21,6 @@ const PublicRoute = ({ isAuthenticated, component: Component, ...rest }) => (
     }
   />
 );
+  }
 
-const mapStateToProps = state => ({
-  isAuthenticated: !!state.auth.uid
-});
-
-export default connect(mapStateToProps)(PublicRoute);
+export default (PublicRoute);
