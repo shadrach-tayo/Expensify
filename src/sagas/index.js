@@ -16,14 +16,23 @@ import {
   logout,
   logoutSuccess,
 } from "../slices/auth";
-import { addExpense, addExpenseSuccess } from "../slices/expenses";
+import {
+  addExpense,
+  editExpense,
+  setExpense,
+  removeExpense,
+  addExpenseSuccess,
+  removeExpenseSuccess,
+  setExpensesSuccess,
+  editExpenseSuccess
+} from "../slices/expenses";
 
 function* googleLogin() {
   try {
-    let data = yield firebase.auth().signInWithPopup(googleAuthProvider);    
-    const userData = data.user.providerData[0]    
+    let data = yield firebase.auth().signInWithPopup(googleAuthProvider);
+    const userData = data.user.providerData[0];
 
-    yield put(loginSuccess({...userData, uid: data.user.uid}));
+    yield put(loginSuccess({ ...userData, uid: data.user.uid }));
   } catch (e) {
     console.log("login error ", e);
     yield put(loginError(e.message));
@@ -62,16 +71,11 @@ function* logoutUser() {
   }
 }
 
-function* createExpense({payload}) {
+function* createExpense({ payload }) {
   try {
     const { uid } = yield select(getAuth);
-    
-    const {
-      description = "",
-      note = "",
-      amount = 0,
-      createdAt = 0,
-    } = payload;
+
+    const { description = "", note = "", amount = 0, createdAt = 0 } = payload;
     const expense = { description, amount, note, createdAt };
 
     const ref = yield database.ref(`users/${uid}/expenses`).push(expense);
@@ -83,6 +87,57 @@ function* createExpense({payload}) {
   }
 }
 
+function* setExpenses() {
+  try {
+    const { uid } = yield select(getAuth);
+
+    const snapshots = yield database.ref(`users/${uid}/expenses`).once("value");
+
+    const expenses = [];
+    snapshots.forEach((snapshot) => {
+      expenses.push({ id: snapshot.key, ...snapshot.val() });
+    });
+
+    console.log("set expense ", expenses);
+    yield put(setExpensesSuccess(expenses));
+  } catch (e) {
+    console.log("set Expense error ", e);
+    // yield put(addExpenseError(e.message));
+  }
+}
+
+function* deleteExpense({ payload }) {
+  try {
+    const { uid } = yield select(getAuth);
+
+    const done = yield database
+      .ref(`users/${uid}/expenses/${payload.id}`)
+      .remove();
+
+    console.log("remove expense ", done);
+    yield put(removeExpenseSuccess(payload));
+  } catch (e) {
+    console.log("remove Expense error ", e);
+    // yield put(addExpenseError(e.message));
+  }
+}
+
+function* modifyExpense({ payload }) {
+  try {
+    const { uid } = yield select(getAuth);
+        
+
+    const done = yield database
+      .ref(`users/${uid}/expenses/${payload.id}`)
+      .update(payload.updates);
+
+    yield put(editExpenseSuccess(payload.updates));
+  } catch (e) {
+    console.log("edit Expense error ", e);
+    // yield put(addExpenseError(e.message));
+  }
+}
+
 // If any of these functions are dispatched, invoke the appropriate saga
 function* rootSaga() {
   yield all([
@@ -91,6 +146,9 @@ function* rootSaga() {
     takeLatest(githubAuth.type, githubLogin),
     takeLatest(logout.type, logoutUser),
     takeLatest(addExpense.type, createExpense),
+    takeLatest(setExpense.type, setExpenses),
+    takeLatest(editExpense.type, modifyExpense),
+    takeLatest(removeExpense.type, deleteExpense),
   ]);
 }
 

@@ -10,27 +10,53 @@ const expenseSlice = createSlice({
       state.loading = true;
     },
 
+    setExpense: (state) => ({...state, loading: true}),    
+
     addExpenseSuccess: (state, { payload }) => {
-      return { ...state, loading: false, expenses: [...state.expenses, payload] };
+      return {
+        ...state,
+        loading: false,
+        expenses: [...state.expenses, payload],
+      };
     },
 
     addExpenseError: (state) => {
       state.loading = false;
     },
-    removeExpense: (state, { payload }) => {
-      return state.expenses.filter(({ id }) => id !== payload.id);
+
+    setExpensesSuccess: (state, { payload }) => {
+      return {
+        ...state,
+        loading: false,
+        expenses: payload,
+      };
     },
 
-    editExpense: (state, { payload }) => {
-      return state.expenses.map((expense) => {
+    removeExpense: (state, { payload }) => {
+      return {...state, loading: true}
+    },
+
+    removeExpenseSuccess: (state, { payload }) => {
+      return {...state, expenses: state.expenses.filter(({ id }) => id !== payload.id)}
+    },
+
+    editExpense: (state) => {      
+      return {...state, loading: true};
+    },
+    
+    editExpenseSuccess: (state, { payload }) => {      
+
+      const expenses = state.expenses.map((expense) => {
         if (expense.id === payload.id) {
           return {
             ...expense,
             ...payload.updates,
           };
         }
-        return expense;
+        return expense
       });
+
+      return {...state, expenses};
     },
 
     setExpense: (_, { payload }) => {
@@ -45,6 +71,9 @@ export const {
   setExpense,
   editExpense,
   addExpenseSuccess,
+  removeExpenseSuccess,
+  editExpenseSuccess,
+  setExpensesSuccess
 } = expenseSlice.actions;
 
 export default expenseSlice.reducer;
