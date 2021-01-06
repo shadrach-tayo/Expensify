@@ -1,10 +1,11 @@
 import { all, put, takeLatest, select } from "redux-saga/effects";
-import {
+import database, {
   firebase,
   googleAuthProvider,
   twitterAuthProvider,
   githubAuthProvider,
 } from "../firebase/firebase";
+import { getAuth } from "../selectors";
 
 import {
   twitterAuth,
@@ -15,15 +16,17 @@ import {
   logout,
   logoutSuccess,
 } from "../slices/auth";
+import { addExpense, addExpenseSuccess } from "../slices/expenses";
 
-function* googleLogin() {  
+function* googleLogin() {
   try {
-    let data = yield firebase.auth().signInWithPopup(googleAuthProvider);
-    console.log("user ", data.user);
-    yield put(loginSuccess(data.user.providerData[0]));
+    let data = yield firebase.auth().signInWithPopup(googleAuthProvider);    
+    const userData = data.user.providerData[0]    
+
+    yield put(loginSuccess({...userData, uid: data.user.uid}));
   } catch (e) {
     console.log("login error ", e);
-    put(loginError(e.message));
+    yield put(loginError(e.message));
   }
 }
 
@@ -34,7 +37,7 @@ function* githubLogin() {
     yield put(loginSuccess(user));
   } catch (e) {
     console.log("login error ", e);
-    put(loginError(e.message));
+    yield put(loginError(e.message));
   }
 }
 
@@ -45,7 +48,7 @@ function* twitterLogin() {
     yield put(loginSuccess(user));
   } catch (e) {
     console.log("login error ", e);
-    put(loginError(e.message));
+    yield put(loginError(e.message));
   }
 }
 
@@ -55,7 +58,28 @@ function* logoutUser() {
     yield put(logoutSuccess());
   } catch (e) {
     console.log("logout error ", e);
-    put(logoutSuccess(e.message));
+    yield put(logoutSuccess(e.message));
+  }
+}
+
+function* createExpense({payload}) {
+  try {
+    const { uid } = yield select(getAuth);
+    
+    const {
+      description = "",
+      note = "",
+      amount = 0,
+      createdAt = 0,
+    } = payload;
+    const expense = { description, amount, note, createdAt };
+
+    const ref = yield database.ref(`users/${uid}/expenses`).push(expense);
+
+    yield put(addExpenseSuccess({ id: ref.key, ...expense }));
+  } catch (e) {
+    console.log("add Expense error ", e);
+    yield put(addExpenseError(e.message));
   }
 }
 
@@ -66,6 +90,7 @@ function* rootSaga() {
     takeLatest(googleAuth.type, googleLogin),
     takeLatest(githubAuth.type, githubLogin),
     takeLatest(logout.type, logoutUser),
+    takeLatest(addExpense.type, createExpense),
   ]);
 }
 

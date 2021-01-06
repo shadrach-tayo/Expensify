@@ -1,11 +1,21 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import expenses from "../selectors/expenses";
+import expensesFilter from "../selectors/expenses";
+import { getExpenses, getFilters } from "../selectors";
 import selectExpensesTotal from "../selectors/expenses-total";
 import numeral from "numeral";
 
-export const ExpensesSummary = ({ expenseCount, expensesTotal } = {expenseCount: 5, expensesTotal: 100}) => {
+export const ExpensesSummary = () => {
+  const {expenses, loading} = useSelector(getExpenses);
+  const expenseFilters = useSelector(getFilters);
+
+  
+
+  const visibleExpenses = expensesFilter(expenses, expenseFilters);
+  const expenseCount = visibleExpenses.length; // get number of visible expense
+  const expensesTotal = selectExpensesTotal(visibleExpenses);
+
   const expenseWord = expenseCount === 1 ? "expense" : "expenses";
   const formatedExpensesTotal = numeral(expensesTotal / 100).format("$0,0.00");
 
@@ -24,14 +34,6 @@ export const ExpensesSummary = ({ expenseCount, expensesTotal } = {expenseCount:
       </div>
     </div>
   );
-};
-
-const mapStateToProps = (state) => {
-  const visibleExpenses = expenses(state.expenses, state.filters);
-  return {
-    expenseCount: visibleExpenses.length,
-    expensesTotal: selectExpensesTotal(visibleExpenses),
-  };
 };
 
 export default ExpensesSummary;

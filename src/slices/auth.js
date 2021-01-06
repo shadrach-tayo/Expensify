@@ -15,9 +15,9 @@ const authSlice = createSlice({
     login: (state) => {
       state.loading = true;
     },
-
-    googleAuth: (state) => {
-      console.log("reducer called ", state);
+    
+    googleAuth: (state) => {      
+      console.log('loading auth ', state)
       state.loading = true;
     },
 

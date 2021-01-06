@@ -1,12 +1,6 @@
 import React from "react";
-import { connect } from "react-redux";
 import { getAuth } from "../selectors";
 import { useSelector, useDispatch } from "react-redux";
-// import {
-//   startGoogleLogin,
-//   startTwitterLogin,
-//   startGithubLogin
-// } from '../actions/auth';
 
 import { githubAuth, googleAuth, twitterAuth } from "../slices/auth";
 
@@ -23,7 +17,6 @@ export const LoginPage = () => {
   const _twitterAuth = () => dispatch(twitterAuth());
   const _googleAuth = () => dispatch(googleAuth());
 
-  console.log('loading ', loading)
   
   return (
     <div className="box-layout">
