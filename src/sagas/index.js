@@ -24,7 +24,7 @@ import {
   addExpenseSuccess,
   removeExpenseSuccess,
   setExpensesSuccess,
-  editExpenseSuccess
+  editExpenseSuccess,
 } from "../slices/expenses";
 
 function* googleLogin() {
@@ -40,10 +40,11 @@ function* googleLogin() {
 }
 
 function* githubLogin() {
-  let user;
+  let data;
   try {
-    user = yield firebase.auth().signInWithPopup(githubAuthProvider);
-    yield put(loginSuccess(user));
+    data = yield firebase.auth().signInWithPopup(githubAuthProvider);
+    const userData = data.user.providerData[0];
+    yield put(loginSuccess({ ...userData, uid: data.user.uid }));
   } catch (e) {
     console.log("login error ", e);
     yield put(loginError(e.message));
@@ -51,10 +52,12 @@ function* githubLogin() {
 }
 
 function* twitterLogin() {
-  let user;
+  let data;
   try {
-    user = yield firebase.auth().signInWithPopup(twitterAuthProvider);
-    yield put(loginSuccess(user));
+    data = yield firebase.auth().signInWithPopup(twitterAuthProvider);
+    const userData = data.user.providerData[0];
+
+    yield put(loginSuccess({ ...userData, uid: data.user.uid }));
   } catch (e) {
     console.log("login error ", e);
     yield put(loginError(e.message));
@@ -97,7 +100,7 @@ function* setExpenses() {
     snapshots.forEach((snapshot) => {
       expenses.push({ id: snapshot.key, ...snapshot.val() });
     });
-    
+
     yield put(setExpensesSuccess(expenses));
   } catch (e) {
     console.log("set Expense error ", e);
@@ -124,7 +127,6 @@ function* deleteExpense({ payload }) {
 function* modifyExpense({ payload }) {
   try {
     const { uid } = yield select(getAuth);
-        
 
     const done = yield database
       .ref(`users/${uid}/expenses/${payload.id}`)
