@@ -9,7 +9,7 @@ export const ExpenseList = (props) => {
   const filters = useSelector(getFilters);
 
   const visibleExpenses = selectExpense(expenses, filters);
-  console.log("visible ", visibleExpenses);
+  
 
   return (
     <div className="container">

@@ -14,7 +14,7 @@ const filtersSlice = createSlice({
   initialState,
   reducers: {
     setText: (state, { payload }) => {
-      return { ...state, text: payload.text };
+      return { ...state, text: payload };
     },
 
     sortByAmount: (state) => {
@@ -34,14 +34,14 @@ const filtersSlice = createSlice({
     setStartDate: (state, { payload }) => {
       return {
         ...state,
-        startDate: payload.startDate,
+        startDate: payload,
       };
     },
 
     setEndDate: (state, { payload }) => {
       return {
         ...state,
-        endDate: payload.endDate,
+        endDate: payload,
       };
     },
   },

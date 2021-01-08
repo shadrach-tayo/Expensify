@@ -22,7 +22,7 @@ const ExpenseDashboardPage = () => {
   return (
     <div>
       <ExpensesSummary />
-      {/* <ExpenseListFilters /> */}
+      <ExpenseListFilters />
       <ExpenseList />
     </div>
   );
