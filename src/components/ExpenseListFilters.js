@@ -1,13 +1,7 @@
 import React, { useState } from "react";
 import { DateRangePicker } from "react-dates";
 import { useDispatch, useSelector } from "react-redux";
-// import { setTextFilter } from "../actions/filters";
-// import {
-//   sortByAmount,
-//   sortByDate,
-//   setStartDate,
-//   setEndDate,
-// } from "../actions/filters";
+
 import { getFilters } from "../selectors";
 import {
   setEndDate,
@@ -16,13 +10,16 @@ import {
   sortByAmount,
   sortByDate,
 } from "../slices/filters";
+import moment from 'moment'
 
 function ExpenseListFilters(props) {
   // state
   const [focused, setFocused] = useState(null);
 
   // selectors
-  const { text, startDate, endDate, sortBy } = useSelector(getFilters);
+  let filtersState = useSelector(getFilters);
+  const { text, startDate, endDate, sortBy } = filtersState;
+  console.log("filters ", filtersState);
 
   // dispatcher
   const dispatch = useDispatch();
@@ -31,7 +28,6 @@ function ExpenseListFilters(props) {
   const _sortByDate = () => dispatch(sortByDate());
   const _setStartDate = (date) => dispatch(setStartDate(date));
   const _setEndDate = (date) => dispatch(setEndDate(date));
-
 
   const onDatesChange = ({ startDate, endDate }) => {
     _setStartDate(startDate);
@@ -48,7 +44,7 @@ function ExpenseListFilters(props) {
     if (e.target.value === "date") _sortByDate();
     else _sortByAmount();
   };
-
+  
   return (
     <div className="container">
       <div className="input-group">
@@ -69,8 +65,8 @@ function ExpenseListFilters(props) {
         </div>
         <div className="input-group__item">
           <DateRangePicker
-            startDate={startDate}
-            endDate={endDate}
+            startDate={startDate ? moment(startDate) : null}
+            endDate={endDate ? moment(endDate) : null}
             onDatesChange={onDatesChange}
             focusedInput={focused}
             onFocusChange={onFocusChange}
@@ -83,19 +79,5 @@ function ExpenseListFilters(props) {
     </div>
   );
 }
-
-// const mapStateToProps = (state) => {
-//   return {
-//     filters: state.filters,
-//   };
-// };
-
-// const mapDispatchToProps = (dispatch) => ({
-//   setTextFilter: (text) => dispatch(setTextFilter(text)),
-//   sortByDate: () => dispatch(sortByDate()),
-//   sortByAmount: () => dispatch(sortByAmount()),
-//   setStartDate: (startDate) => dispatch(setStartDate(startDate)),
-//   setEndDate: (endDate) => dispatch(setEndDate(endDate)),
-// });
 
 export default ExpenseListFilters;

@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { startLogout } from "../actions/auth";
 import { logout } from "../slices/auth";
 
 export const Header = () => {
@@ -26,8 +25,5 @@ export const Header = () => {
     </header>
   );
 };
-const mapDispatchToProps = (dispatch) => ({
-  startLogout: () => dispatch(startLogout()),
-});
 
 export default Header;

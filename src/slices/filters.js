@@ -5,8 +5,8 @@ import moment from "moment";
 const initialState = {
   text: "",
   sortBy: "",
-  startDate: moment().startOf("month"),
-  endDate: moment().endOf("month"),
+  startDate: moment().startOf("month").toISOString(),
+  endDate: moment().endOf("month").toISOString(),
 };
 
 const filtersSlice = createSlice({

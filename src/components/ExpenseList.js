@@ -10,7 +10,6 @@ export const ExpenseList = (props) => {
 
   const visibleExpenses = selectExpense(expenses, filters);
   
-
   return (
     <div className="container">
       <div className="list-header">

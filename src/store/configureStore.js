@@ -1,8 +1,5 @@
-import { createStore, combineReducers, compose, applyMiddleware } from "redux";
-// import thunk from "redux-thunk";
-// import expensesReducer from "../reducers/expenses";
-// import filtersReducer from "../reducers/filters";
-// import authReducer from "../reducers/auth";
+import { compose } from "redux";
+
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "../sagas/index";

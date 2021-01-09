@@ -9,10 +9,10 @@ export default (expenses, { text, sortBy, startDate, endDate }) => {
         .toLowerCase()
         .includes(text.toLowerCase());
       const startDateMatch = startDate
-        ? startDate.isSameOrBefore(createdAtMoment)
+        ? moment(startDate).isSameOrBefore(createdAtMoment)
         : true;
       const endDateMatch = endDate
-        ? endDate.isSameOrAfter(createdAtMoment)
+        ? moment(endDate).isSameOrAfter(createdAtMoment)
         : true;
       return textMatch && startDateMatch && endDateMatch;
     })
