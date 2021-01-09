@@ -100,7 +100,7 @@ function* setExpenses() {
     snapshots.forEach((snapshot) => {
       expenses.push({ id: snapshot.key, ...snapshot.val() });
     });
-
+    console.log('saga/setExpenses ', expenses)
     yield put(setExpensesSuccess(expenses));
   } catch (e) {
     console.log("set Expense error ", e);

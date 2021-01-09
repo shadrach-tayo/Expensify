@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getExpenses } from "../selectors";
 import { setExpense } from "../slices/expenses";
@@ -8,16 +8,16 @@ import ExpensesSummary from "./ExpensesSummary";
 
 const ExpenseDashboardPage = () => {
   const dispatch = useDispatch();
-  const _loadExpenses = () => dispatch(setExpense());
+  const _loadExpenses = useCallback(() => dispatch(setExpense(), [dispatch]));
 
-  const {expenses, loading } = useSelector(getExpenses);
+  const { expenses, loading } = useSelector(getExpenses);
 
   useEffect(() => {
+    if(loading) return;
     _loadExpenses();
     return () => {};
-  }, [expenses.length]);
+  }, []);
 
-  console.log("loading expenses ", loading);
 
   return (
     <div>

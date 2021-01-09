@@ -30,8 +30,8 @@ function ExpenseListFilters(props) {
   const _setEndDate = (date) => dispatch(setEndDate(date));
 
   const onDatesChange = ({ startDate, endDate }) => {
-    _setStartDate(startDate);
-    _setEndDate(endDate);
+    _setStartDate(startDate ? startDate.toISOString() : null);
+    _setEndDate(endDate ? endDate.toISOString() : null);
   };
 
   const onFocusChange = (focused) => {
